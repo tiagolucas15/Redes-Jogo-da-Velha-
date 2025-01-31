@@ -17,7 +17,19 @@ O programa utiliza comunicação em rede para conectar os dois jogadores. Um jog
 ## Requisitos
 - Python 3.x
 - Conexão à internet ou rede local (LAN) para os dois jogadores
+- Um editor de código como VS Code, PyCharm, ou mesmo o terminal.
 
 ## Exemplo de execução
 
 - https://youtu.be/iBrvBndk2Cs
+
+## Instrução de instalação
+
+- Faça o dowload dos arquivos
+- Exucute o host
+- Execute o guest
+- Teste o código
+
+## Autoria 
+
+- Tiago Lucas Nascimento da Silva, aluno de Sistemas de informação da Universidade Federal Fluminense.
