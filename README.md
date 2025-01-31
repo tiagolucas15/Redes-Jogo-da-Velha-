@@ -1,7 +1,7 @@
 # Redes Jogo da Velha 
   Redes Jogo da Velha é uma implementação em Python do popular jogo de tabuleiro, feita como uma atividade da disciplina de Redes De Computadores da Universidade Federal Fluminense, ministrada pelo docente Flavio Luiz Seixas. Este programa permite dois jogadores competirem online em um tabuleiro virtual utilizando comunicação por socket.
 
-# Descrição do Projeto
+## Descrição do Projeto
 O jogo segue as regras clássicas do Jogo da Velha:
 - Dois jogadores se alternam fazendo jogadas.
 - Cada jogador escolhe uma coluna para colocar sua peça ("X" ou "O").
