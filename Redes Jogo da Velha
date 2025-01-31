@@ -1,1 +1,78 @@
+import socket
+import threading
+
+def print_board(board):
+    for row in board:
+        print(" | ".join(row))
+    print()
+
+def check_winner(board):
+    for row in board:
+        if row[0] == row[1] == row[2] and row[0] != " ":
+            return True
+    for col in range(3):
+        if board[0][col] == board[1][col] == board[2][col] and board[0][col] != " ":
+            return True
+    if board[0][0] == board[1][1] == board[2][2] and board[0][0] != " ":
+        return True
+    if board[0][2] == board[1][1] == board[2][0] and board[0][2] != " ":
+        return True
+    return False
+
+def is_draw(board):
+    return all(cell != " " for row in board for cell in row)
+
+def play_game(conn, player_symbol):
+    board = [[" " for _ in range(3)] for _ in range(3)]
+    turn = "X"
+    
+    while True:
+        print_board(board)
+        if turn == player_symbol:
+            move = input("Sua jogada (linha,coluna): ")
+            conn.send(move.encode())
+        else:
+            print("Aguardando jogada do adversário...")
+            move = conn.recv(1024).decode()
+        
+        row, col = map(int, move.split(","))
+        if board[row][col] == " ":
+            board[row][col] = turn
+            if check_winner(board):
+                print_board(board)
+                print(f"Jogador {turn} venceu!")
+                break
+            elif is_draw(board):
+                print_board(board)
+                print("Empate!")
+                break
+            turn = "X" if turn == "O" else "O"
+        else:
+            print("Posição inválida! Tente novamente.")
+
+def start_host():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(("0.0.0.0", 12345))
+    server.listen(1)
+    print("Aguardando conexão...")
+    conn, addr = server.accept()
+    print(f"Conectado a {addr}")
+    play_game(conn, "X")
+    conn.close()
+    server.close()
+
+def start_guest():
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    host_ip = input("Digite o IP do host: ")
+    client.connect((host_ip, 12345))
+    print("Conectado ao servidor!")
+    play_game(client, "O")
+    client.close()
+
+if __name__ == "__main__":
+    choice = input("Você deseja ser o Host (H) ou o Guest (G)? ").upper()
+    if choice == "H":
+        start_host()
+    else:
+        start_guest()
 
